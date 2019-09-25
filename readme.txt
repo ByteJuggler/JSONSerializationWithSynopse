@@ -1,1 +1,1 @@
-Demo projects to demonstrat an apprent problem with SynCommons.pas.  
+Demo projects to demonstrate an apparent problem with ObjectToJSON in SynCommons.pas.  

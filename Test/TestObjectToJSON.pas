@@ -5,7 +5,7 @@ interface
 uses
   TestFramework, System.SysUtils, Vcl.Graphics, uJSONSerializationWithSynopseForm,
   Winapi.Windows, System.Variants, Soap.InvokeRegistry, Vcl.StdCtrls, Vcl.Dialogs,
-  Vcl.Controls, Vcl.Forms, Winapi.Messages, SynCommons, System.Classes, uJSONSerializationTestObjects;
+  Vcl.Controls, Vcl.Forms, Winapi.Messages, SynCommons, mORMot, System.Classes, uJSONSerializationTestObjects;
 
 type
   TTestObjectToJSON = class(TTestCase)
@@ -33,6 +33,7 @@ uses REST.JsonReflect, System.JSON
 
 procedure TTestObjectToJSON.SetUp;
 begin
+  SynCommons.TTextWriter.SetDefaultJSONClass(TJSONSerializer);
   FMyPlainTestObj := TMyPlainTestObj.Create;
   FMyPlainTestObj.Name := 'Joe Bloggs';
   FMyPlainTestObj.BirthDate := EncodeDate (1985, 08, 01);
@@ -76,7 +77,7 @@ begin
     //    exit;
     //  end;
   json := SynCommons.ObjectToJSON(FMyPlainTestObj);
-  CheckEquals('{"birthDate":"1985-08-01T00:00:00.000Z","name":"Joe Bloggs","children":12}', json);
+  CheckEquals('{"Name":"Joe Bloggs","BirthDate":"1985-08-01","Children":12}', json);
 end;
 
 procedure TTestObjectToJSON.TestSynopse_ObjectToJSON_WithPersistentObjectMustSucceedAndReturnCorrectJSONRepr;
@@ -84,7 +85,7 @@ var json : String;
 begin
   //Why is ObjectToJSON returning "null" here? It seems broken.
   json := SynCommons.ObjectToJSON(FMyPersistentTestObj);
-  CheckEquals('{"birthDate":"1985-08-01T00:00:00.000Z","name":"Joe Bloggs","children":12}', json);
+  CheckEquals('{"Name":"Joe Bloggs","BirthDate":"1985-08-01","Children":12}', json);
 end;
 
 procedure TTestObjectToJSON.TestSynopse_ObjectToJSON_WithRemotableObjectMustSucceedAndReturnCorrectJSONRepr;
@@ -92,7 +93,7 @@ var json : String;
 begin
   //Why is ObjectToJSON returning "null" here? It seems broken.
   json := SynCommons.ObjectToJSON(FMyRemotableTestObj);
-  CheckEquals('{"birthDate":"1985-08-01T00:00:00.000Z","name":"Joe Bloggs","children":12,"dataContext":null}', json);
+  CheckEquals('{"Name":"Joe Bloggs","BirthDate":"1985-08-01","Children":12}', json);
 end;
 
 function ObjectToJSON(obj : TObject): String;

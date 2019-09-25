@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B55801D7-B9BD-4609-AF3F-BD868056A79F}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="JSONSerializationWithSynopse.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Test\JSONSerializationWithSynopseTests.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="JSONSerializationWithSynopse">
+        <MSBuild Projects="JSONSerializationWithSynopse.dproj"/>
+    </Target>
+    <Target Name="JSONSerializationWithSynopse:Clean">
+        <MSBuild Projects="JSONSerializationWithSynopse.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JSONSerializationWithSynopse:Make">
+        <MSBuild Projects="JSONSerializationWithSynopse.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="JSONSerializationWithSynopseTests">
+        <MSBuild Projects="Test\JSONSerializationWithSynopseTests.dproj"/>
+    </Target>
+    <Target Name="JSONSerializationWithSynopseTests:Clean">
+        <MSBuild Projects="Test\JSONSerializationWithSynopseTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JSONSerializationWithSynopseTests:Make">
+        <MSBuild Projects="Test\JSONSerializationWithSynopseTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="JSONSerializationWithSynopse;JSONSerializationWithSynopseTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="JSONSerializationWithSynopse:Clean;JSONSerializationWithSynopseTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="JSONSerializationWithSynopse:Make;JSONSerializationWithSynopseTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

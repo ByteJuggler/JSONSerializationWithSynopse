@@ -1,0 +1,1 @@
+Demo projects to demonstrat an apprent problem with SynCommons.pas.  
